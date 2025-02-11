@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Metrics Results</title>
+    <link rel="stylesheet" href="results.css">
+</head>
+<body>
+    <h1>Health Metrics Results</h1>
+    <div id="results-container"></div>
+
+    <script src="script.js"></script>
+    <script>
+        // Parse parameters from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const bmi = parseFloat(urlParams.get('bmi'));
+        const waterContent = parseFloat(urlParams.get('waterContent'));
+        const muscleWeight = parseFloat(urlParams.get('muscleWeight'));
+        const fatContent = parseFloat(urlParams.get('fatContent'));
+        const healthStatus = urlParams.get('healthStatus');
+        const height_unit =urlParams.get('heightUnit');
+        const weight_unit=urlParams.get('weightUnit');
+
+        // Display results
+        const resultsContainer = document.getElementById("results-container");
+        resultsContainer.innerHTML = `
+            <h2>Results</h2>
+            <p>BMI: ${bmi}</p>
+            <p>Water Content: ${waterContent} %</p>
+            <p>Muscle Weight: ${muscleWeight} ${weight_unit}</p>
+            <p>Fat Content: ${fatContent} ${weight_unit}</p>
+            <p>Health Status: ${healthStatus}</p>
+        `;
+
+        // Add buttons based on health status
+        const buttonContainer = document.createElement("div");
+        buttonContainer.id = "button-container";
+        let nutrientButtonLabel = "";
+        let exerciseButtonLabel = "";
+
+        if (healthStatus.includes("Overweight") || fatContent > 25) {
+            nutrientButtonLabel = "Weight Loss Diet";
+            exerciseButtonLabel = "Exercise";
+        } else if (healthStatus.includes("Low muscle mass") || healthStatus.includes("Underweight")) {
+            nutrientButtonLabel = "Weight Gain Diet";
+            exerciseButtonLabel = "Exercise";
+        }
+
+        if (nutrientButtonLabel && exerciseButtonLabel) {
+            const nutrientDietButton = document.createElement("button");
+            nutrientDietButton.textContent = nutrientButtonLabel;
+            nutrientDietButton.id = "nutrient-diet";
+            nutrientDietButton.addEventListener("click", () => {
+                // Redirect to the respective diet page with parameters
+                let dietPage = nutrientButtonLabel === "Weight Gain Diet" ? 'weightgain.html' : 'weightloss.html';
+                window.location.href = `${dietPage}?${urlParams.toString()}`;
+            });
+
+            const exerciseButton = document.createElement("button");
+            exerciseButton.textContent = exerciseButtonLabel;
+            exerciseButton.id = "exercise";
+            exerciseButton.addEventListener("click", () => {
+                // Redirect to exercise page with parameters
+                window.location.href = `exercise.html?${urlParams.toString()}`;
+            });
+
+            buttonContainer.appendChild(nutrientDietButton);
+            buttonContainer.appendChild(exerciseButton);
+            resultsContainer.appendChild(buttonContainer);
+        }
+    </script>
+
+    <button class="back-button" onclick="goBack()">Back</button>
+
+    <script>
+        function goBack() {
+            // Go back to index.html with the same parameters
+            window.location.href = `index.html?${urlParams.toString()}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diet Plan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('image.png') center/cover;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #image-container {
+            margin-bottom: 34px;
+        }
+        p {
+            color: white;
+            font-size: 18px;
+        }
+        .back-button {
+            position: absolute;
+            color: white;
+            background-color: blue;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Diet Plan (For 52 weeks)</h1>
+    <div id="image-container">
+        <img src="wloss.png" alt="Diet Plan Image" style="max-width: 100%;">
+    </div>
+    <p>Welcome to the Diet Plan page!</p>
+    <!-- Add your diet plan information here -->
+    <button class="back-button" onclick="goBack()">Back</button>
+
+    <script>
+        function goBack() {
+            // Parse parameters from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const bmi = parseFloat(urlParams.get('bmi'));
+            const waterContent = parseFloat(urlParams.get('waterContent'));
+            const muscleWeight = parseFloat(urlParams.get('muscleWeight'));
+            const fatContent = parseFloat(urlParams.get('fatContent'));
+            const healthStatus = urlParams.get('healthStatus');
+
+            // Construct URL with parameters for results.html
+            const backUrlParams = new URLSearchParams();
+            backUrlParams.set('bmi', bmi);
+            backUrlParams.set('waterContent', waterContent);
+            backUrlParams.set('muscleWeight', muscleWeight);
+            backUrlParams.set('fatContent', fatContent);
+            backUrlParams.set('healthStatus', healthStatus);
+            
+            window.location.href = `results.html?${backUrlParams.toString()}`;
+        }
+    </script>
+</body>
+</html>

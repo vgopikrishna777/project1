@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FULL BODY WORKOUT</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('image.png') center/cover;
+            margin: 20px;
+            text-align: center;
+        }
+        h1 {
+            text-align: center;
+            color:white;
+        }
+        #image-container {
+            margin-bottom: 20px;
+        }
+        .back-button {
+            color:white;
+            background-color: blue;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>FULL BODY WORKOUT</h1>
+    <div id="image-container">
+        <img src="exe.jpeg" alt="Full Body Workout Image" style="max-width: 100%;">
+    </div>
+    <!-- Add your full body workout information here -->
+    <button class="back-button" onclick="goBack()">Back</button>
+
+    <script>
+        function goBack() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const bmi = parseFloat(urlParams.get('bmi'));
+            const waterContent = parseFloat(urlParams.get('waterContent'));
+            const muscleWeight = parseFloat(urlParams.get('muscleWeight'));
+            const fatContent = parseFloat(urlParams.get('fatContent'));
+            const healthStatus = urlParams.get('healthStatus');
+
+            // Construct URL with parameters for results.html
+            const backUrlParams = new URLSearchParams();
+            backUrlParams.set('bmi', bmi);
+            backUrlParams.set('waterContent', waterContent);
+            backUrlParams.set('muscleWeight', muscleWeight);
+            backUrlParams.set('fatContent', fatContent);
+            backUrlParams.set('healthStatus', healthStatus);
+
+            window.location.href = `results.html?${backUrlParams.toString()}`;
+        }
+    </script>
+</body>
+</html>
